@@ -3,7 +3,6 @@ CHIP Mux {
     OUT out;
 
     PARTS:
-    Mux(a=a, b=b, sel=sel, out=out);
 /*
            truth table
         | a | b |sel|out|
