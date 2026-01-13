@@ -7,7 +7,7 @@ CHIP Xor {
     Nand(a=a, b=b, out=temp2);
     And(a=temp1, b=temp2 , out=out);
 /*
-    truth table
+     truth table
     | a | b |out|
     | 0 | 0 | 0 |
     | 0 | 1 | 1 |

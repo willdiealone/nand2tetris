@@ -3,7 +3,27 @@ CHIP Mux {
     OUT out;
 
     PARTS:
+    Not(in=a, out=Nota);
+    Not(in=b, out=Notb);
+    Not(in=sel, out=Notsel);
+    
+    And(a=nota, b=b, out=bAndNota);
+    And(a=bAndNota, b=sel, out=term1);
+
+    And(a=a, b=notb, out=aAndNotb);
+    And(a=aAndNotb, b=notsel, out=term2);
+    
+    And(a=a, b=b, out=aAndb);
+    And(a=aAndb, b=notsel, out=term3);
+
+    And(a=aAndb, b=sel, out=term4);
+
+    Or(a=term1, b=term2, out=resultLeft);
+    Or(a=term3, b=term4, out=resultRight);
+    Or(a=resultLeft, b=resultRight, out=out);    
 /*
+(NOT(a) AND b AND sel) OR (a AND NOT(b) AND NOT(sel)) OR (a AND b AND NOT(sel)) OR (a AND b AND sel)
+
            truth table
         | a | b |sel|out|
         | 0 | 0 | 0 | 0 |
