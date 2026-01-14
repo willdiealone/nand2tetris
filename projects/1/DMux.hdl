@@ -12,16 +12,6 @@ CHIP DMux {
 
     And(a=in, b=Notsel, out=a);
     And(a=in, b=sel, out=b);
-    
-// |in |sel| a | b |
-// | 1 | 0 | 1 | 0 |
-// | 1 | 1 | 0 | 1 |
-// 
-// (in And Not(sel)) 
-// (in And sel) 
-// in And Not(sel)
-// in And sel
-
 /*
        truth table 
     |in |sel| a | b |
