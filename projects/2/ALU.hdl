@@ -80,13 +80,14 @@ CHIP ALU {
     // Толкаем дальше нужный результат в зависимоти от состояния f
     Mux16(a=xANDy, b=xSUMy, sel=f, out=outF);
     Not16(in=outF, out=NotoutF);
-    // // Толкаем дальше нужный результат в зависимоти от состояния no
+    // Толкаем дальше нужный результат в зависимоти от состояния no
     Mux16(a=outF, b=NotoutF, sel=no, out=outNo);    
+    // Делаем подшины вывода и сразу кидаем старший бит во флаг ng
     Mux16(a=outF, b=NotoutF, sel=no, out=out, out[0..7]=out0to7, out[8..15]=out8to15, out[15]=ng); 
     //----------------------------------------------------------------------------------------
     //
     //
-    // Установка флагов zr и ng
+    // Установка флага zr
     // zr == if (out == 0) equals 1, else 0
     Or8Way(in=out0to7, out=outLow);
     Or8Way(in=out8to15, out=outHigh);
