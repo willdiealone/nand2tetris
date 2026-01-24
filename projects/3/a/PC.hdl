@@ -10,17 +10,18 @@ CHIP PC {
     OUT out[16];
     
     PARTS:
-    // reset > load > inc > hold
+    // reset > load > inc > hold приоритет операций
     // Закидываем значение в регистр
     Register(in=next, load=true, out=value);
     // Пробрасываем наружу value
     Or16(a=value, b=false, out=out);
     // Увеличивем счетчик
     Inc16(in=value, out=valuePlus1);
-    // inc? value+1 : value
-    Mux16(a=value, b=valuePlus1, sel=inc, out=incOrHold);
-    // load? in : (inc/hold)
-    Mux16(a=incOrHold, b=in, sel=load, out=loadOrInc);
-    // reset? 0 : ...
-    Mux16(a=loadOrInc, b=false, sel=reset, out=next);
+    // Если inc1, то делаем инкремент нашего числа
+    Mux16(a=value, b=valuePlus1, sel=inc, out=valueOrvaluePlus1);
+    // Если load1, то делаем запись нашего числа in
+    Mux16(a=valueOrvaluePlus1, b=in, sel=load, out=loadInOrvalueOrvaluePlus1);
+    // Проверяем сброс, если reset 1, то обнуляем наше текущее значение 
+    Mux16(a=loadInOrvalueOrvaluePlus1, b=false, sel=reset, out=next);
+    
 }
