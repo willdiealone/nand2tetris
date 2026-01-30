@@ -1,7 +1,3 @@
-// This file is part of www.nand2tetris.org
-// and the book "The Elements of Computing Systems"
-// by Nisan and Schocken, MIT Press.
-// File name: projects/3/b/RAM16K.hdl
 /**
  * Memory of 16K 16-bit registers.
  * If load is asserted, the value of the register selected by
@@ -25,11 +21,11 @@ CHIP RAM16K {
     Mux8Way16(a=o0, b=o1, c=o2, d=o3, e=o4, f=o5, g=o6, h=o7, sel=address[11..13], out=out);
 /*
     RAM16K
-    └── 8 × RAM4K        ← address[11..13]
-        └── 8 × RAM512   ← address[8..10]
-            └── 8 × RAM64 ← address[6..8]
-                └── 8 × RAM8 ← address[3..5]
-                    └── 8 × Register ← address[0..2]
+    └── 8 × RAM4K       
+        └── 8 × RAM512  
+            └── 8 × RAM64 
+                └── 8 × RAM8 
+                    └── 8 × Register
                         └── 16 бит
 */
 }

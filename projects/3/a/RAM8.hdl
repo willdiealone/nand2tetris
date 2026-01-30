@@ -9,18 +9,23 @@ CHIP RAM8 {
     OUT out[16];
 
     PARTS:
-    // Раздаём сигнал load только одному регистру по адресу
+    //
+    // Пример:
+    // мы хотим перезаписать load 1 регистр данных с адресом address 011
     DMux8Way(in=load, sel=address,a=ld0, b=ld1, c=ld2, d=ld3, e=ld4, f=ld5, g=ld6, h=ld7);
-    // 8 регистров (in идёт всем, но load только выбранному)
+    // 1 будет в ld3
+    //
+    // теперь мы обращаемся к каждому из регистров и закидыавем наши результирующие переменные ld0,ld1...
     Register(in=in, load=ld0, out=o0);
     Register(in=in, load=ld1, out=o1);
     Register(in=in, load=ld2, out=o2);
-    Register(in=in, load=ld3, out=o3);
+    Register(in=in, load=ld3, out=o3);// в этом регистре 16 битная шина переопределит значения и на выходе o3 это наше число
+    // там будет новое значение, в остальных регистрах оно будет прежним так как для них load 0
     Register(in=in, load=ld4, out=o4);
     Register(in=in, load=ld5, out=o5);
     Register(in=in, load=ld6, out=o6);
     Register(in=in, load=ld7, out=o7);
-    // Чтение: выбираем выход нужного регистра по адресу
+    // тут мы выведем наш o3 через в out в 16bit шину на чтение или куда там надо нам
     Mux8Way16(a=o0, b=o1, c=o2, d=o3, e=o4, f=o5, g=o6, h=o7,sel=address, out=out);
     
 }

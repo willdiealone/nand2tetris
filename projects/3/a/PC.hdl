@@ -9,8 +9,7 @@ CHIP PC {
     IN in[16], inc, load, reset;
     OUT out[16];
     
-    PARTS:
-    // reset > load > inc > hold приоритет операций
+    PARTS:    
     // Закидываем значение в регистр
     Register(in=next, load=true, out=value);
     // Пробрасываем наружу value

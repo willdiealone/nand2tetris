@@ -11,15 +11,20 @@ CHIP RAM64 {
     PARTS:
     // 
     // Пример:
-    // мы хотим перезаписать load 1 регистр данных с адресом address 001010    
+    // мы хотим перезаписать load 1 регистр данных с адресом address 000011,
+    // берем 3 старших бита 000 чтобы определить блок в какой регистров регистров идем
     DMux8Way(in=load, sel=address[3..5],a=ld0, b=ld1, c=ld2, d=ld3, e=ld4, f=ld5, g=ld6, h=ld7);
-    RAM8(in=in, load=ld0, address=address[0..2], out=o0);
+    // тут мы идем в блок регистров ld0 и кидаем туда наши 16 бит и передаем load 1,
+    // и дальше мы в этом блоке регистров убдем искать адрес 011
+    // в блоке ригистров мы найдем нужный регистр по адресу 011 и перезапишем там биты на in
+    RAM8(in=in, load=ld0, address=address[0..2], out=o0); // идем сюда так как load 1 тут и o0 это наше число 
     RAM8(in=in, load=ld1, address=address[0..2], out=o1);
     RAM8(in=in, load=ld2, address=address[0..2], out=o2);
     RAM8(in=in, load=ld3, address=address[0..2], out=o3);
     RAM8(in=in, load=ld4, address=address[0..2], out=o4);
     RAM8(in=in, load=ld5, address=address[0..2], out=o5);
     RAM8(in=in, load=ld6, address=address[0..2], out=o6);
-    RAM8(in=in, load=ld7, address=address[0..2], out=o7);    
+    RAM8(in=in, load=ld7, address=address[0..2], out=o7);
+    // дальше мы передаем результаты out каждого блока регистров в Mux и по адресу выводим нужный, то есть наш o0 
     Mux8Way16(a=o0, b=o1, c=o2, d=o3, e=o4, f=o5, g=o6, h=o7,sel=address[3..5], out=out);   
 }
